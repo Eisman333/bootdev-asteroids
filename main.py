@@ -6,8 +6,14 @@ from player import Player
 def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    
     clock = pygame.time.Clock()
     dt = 0 # delta time in seconds
+
+    updateable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    Player.containers = (updateable, drawable)
+
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
     while True:
@@ -15,10 +21,12 @@ def main():
             if event.type == pygame.QUIT:
                 return
 
-        player.update(dt)
+        for member in updateable:
+            member.update(dt)
 
         screen.fill(pygame.Color("black"))
-        player.draw(screen)
+        for member in drawable:
+            member.draw(screen)
         pygame.display.flip()
         dt = clock.tick(60) / 1000
 
