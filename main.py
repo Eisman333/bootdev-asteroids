@@ -1,3 +1,5 @@
+import sys
+
 import pygame
 
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
@@ -29,6 +31,10 @@ def main():
 
         for member in updateable:
             member.update(dt)
+        for asteroid in asteroids:
+            if asteroid.is_colliding(player):
+                print("Game over!")
+                sys.exit()
 
         screen.fill(pygame.Color("black"))
         for member in drawable:
